@@ -1,8 +1,7 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 
-import 'home/view.dart';
-import 'models/device.dart';
-import 'models/home_model.dart';
+import 'app/home/view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,17 +10,20 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return AdaptiveTheme(
+      light: ThemeData.light(useMaterial3: true),
+      dark: ThemeData.dark(useMaterial3: true),
+      initial: AdaptiveThemeMode.light,
+      debugShowFloatingThemeButton: true,
+      builder: (theme, darkTheme) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Adaptive Theme',
+        theme: theme,
+        darkTheme: darkTheme,
+        home: const MyHomePage(),
       ),
-      home: const MyHomePage(),
     );
   }
 }

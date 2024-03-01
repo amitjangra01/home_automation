@@ -1,6 +1,6 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:home_automation/main.dart';
-import '../data/data.dart';
+import '../../data/constants.dart';
 import '../widgets/home_page_tile.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
+    final mode = AdaptiveTheme.of(context).mode;
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -73,15 +74,20 @@ class _MyHomePageState extends State<MyHomePage>
       appBar: AppBar(
         title: const Text('Mohesu'),
         centerTitle: true,
-        // leading: IconButton(
-        //   onPressed: () {
-        //     AnimateIcon();
-        //   },
-        //   icon: AnimatedIcon(
-        //     icon: AnimatedIcons.menu_close,
-        //     progress: iconController,
-        //   ),
-        // ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          setState(() {
+            if (mode == AdaptiveThemeMode.light) {
+              AdaptiveTheme.of(context).setDark();
+            } else {
+              AdaptiveTheme.of(context).setLight();
+            }
+          });
+        },
+        child: Icon(mode == AdaptiveThemeMode.light
+            ? Icons.light_mode
+            : Icons.dark_mode),
       ),
       body: GridView.count(
         primary: false,
@@ -102,4 +108,8 @@ class _MyHomePageState extends State<MyHomePage>
       ),
     );
   }
+}
+
+getThemeMode(BuildContext context) {
+  return AdaptiveTheme.of(context).mode;
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:home_automation/widgets/detail_page_tile.dart';
 import 'package:lottie/lottie.dart';
 
-import '../models/device.dart';
-import '../models/home_model.dart';
+import '../app/models/device.dart';
+import '../app/models/room_model.dart';
+import '../app/widgets/detail_page_tile.dart';
 
 const iconSize = 50.0;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../detail/view.dart';
 import '../models/device.dart';
-import '../models/home_model.dart';
+import '../models/room_model.dart';
 
 class HomePageTile extends StatelessWidget {
   final String title;
@@ -68,7 +68,7 @@ class HomePageTile extends StatelessWidget {
                             )
                           : null,
           border: Border.all(
-            color: Colors.teal,
+            // color: Colors.teal,
             width: 2,
           ),
         ),
@@ -82,7 +82,7 @@ class HomePageTile extends StatelessWidget {
               title,
               style: const TextStyle(
                 fontSize: 22,
-                color: Colors.black,
+                // color: Colors.black,
               ),
             ),
             const SizedBox(height: 2),

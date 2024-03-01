@@ -1,7 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
-import '../models/home_model.dart';
+import '../models/room_model.dart';
 import '../widgets/detail_page_tile.dart';
 
 class DetailsView extends StatefulWidget {
