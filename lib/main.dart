@@ -13,8 +13,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdaptiveTheme(
-      light: ThemeData.light(useMaterial3: true),
-      dark: ThemeData.dark(useMaterial3: true),
+      // light: ThemeData.light(useMaterial3: true),
+      // dark: ThemeData.dark(useMaterial3: true),
+      light: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.light,
+        colorSchemeSeed: Colors.purple,
+      ),
+      dark: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        colorSchemeSeed: Colors.purple,
+      ),
       initial: AdaptiveThemeMode.light,
       debugShowFloatingThemeButton: true,
       builder: (theme, darkTheme) => MaterialApp(

@@ -22,7 +22,7 @@ class DetailPageTile extends HookConsumerWidget {
         // color: Colors.yellow.shade100,
         borderRadius: BorderRadius.circular(25),
         border: Border.all(
-          color: Colors.pink,
+          color: state ? Colors.pink : Colors.grey,
           width: 2,
         ),
       ),
