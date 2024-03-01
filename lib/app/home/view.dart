@@ -1,23 +1,24 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:home_automation/app/home/provider.dart';
 import '../../data/constants.dart';
 import '../widgets/home_page_tile.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  ConsumerState<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
+class _MyHomePageState extends ConsumerState<MyHomePage>
     with SingleTickerProviderStateMixin {
   late AnimationController
       iconController; // make sure u have flutter sdk > 2.12.0 (null safety)
   bool isAnimated = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     iconController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1000));
@@ -25,6 +26,7 @@ class _MyHomePageState extends State<MyHomePage>
       await Future.delayed(const Duration(seconds: 1));
       iconController.reverse();
     });
+    loadRooms(ref);
   }
 
   void AnimateIcon() {
@@ -38,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   void dispose() {
-    // implement dispose
     iconController.dispose();
     super.dispose();
   }
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     final mode = AdaptiveTheme.of(context).mode;
+    final rooms = ref.watch(roomsStateNotifierProvider);
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -96,20 +98,14 @@ class _MyHomePageState extends State<MyHomePage>
         mainAxisSpacing: 10,
         crossAxisCount: 2,
         shrinkWrap: true,
-        children: homePageTiles
-            .map((e) => HomePageTile(
-                  title: e.name,
-                  icon: e.icon,
-                  index: e.index,
-                  radius: 30,
-                  devices: e.devices,
-                ))
-            .toList(),
+        children:
+            rooms.map((room) => HomePageTile(radius: 30, room: room)).toList(),
       ),
     );
   }
 }
 
-getThemeMode(BuildContext context) {
-  return AdaptiveTheme.of(context).mode;
+void loadRooms(WidgetRef ref) {
+  Future.delayed(const Duration(milliseconds: 10),
+      () => ref.read(roomsStateNotifierProvider.notifier).setData(roomsList));
 }

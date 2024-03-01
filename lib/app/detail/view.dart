@@ -1,10 +1,14 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:home_automation/app/detail/provider.dart';
 
+import '../home/provider.dart';
+import '../models/device.dart';
 import '../models/room_model.dart';
 import '../widgets/detail_page_tile.dart';
 
-class DetailsView extends StatefulWidget {
+class DetailsView extends ConsumerStatefulWidget {
   final RoomModel model;
   const DetailsView({
     super.key,
@@ -12,12 +16,18 @@ class DetailsView extends StatefulWidget {
   });
 
   @override
-  State<DetailsView> createState() => _DetailsViewState();
+  ConsumerState<DetailsView> createState() => _DetailsViewState();
 }
 
-class _DetailsViewState extends State<DetailsView> {
+class _DetailsViewState extends ConsumerState<DetailsView> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(roomDevicesStateNotifierProvider(widget.model.id));
     return Scaffold(
       appBar: AppBar(
         title: Text("${widget.model.name} devices"),
@@ -30,37 +40,27 @@ class _DetailsViewState extends State<DetailsView> {
           mainAxisSpacing: 10,
           crossAxisCount: 2,
           shrinkWrap: true,
-          children: widget.model.devices
-              .map((e) => DetailPageTile(
-                    title: e.name,
-                    icon: e.state ? e.activeIcon : e.inActiveIcon,
-                    state: e.state,
+          children: state
+              .map((device) => DetailPageTile(
+                    title: device.name,
+                    icon:
+                        device.state ? device.activeIcon : device.inActiveIcon,
+                    state: device.state,
                     onChanged: (value) {
-                      setState(() {
-                        e.state = !e.state;
-                      });
+                      ref
+                          .read(
+                              roomDevicesStateNotifierProvider(widget.model.id)
+                                  .notifier)
+                          .toggleDeviceState(device);
+
+                      ref
+                          .read(roomsStateNotifierProvider.notifier)
+                          .update(state, widget.model.id);
                     },
                   ))
               .toList(),
         ),
       ),
     );
-  }
-}
-
-Widget getIcon({String value = '', bool state = false, int speed = 1}) {
-  switch (value) {
-    case 'Refrigerator':
-      return const Icon(Icons.kitchen);
-    case 'Microwave':
-      return const Icon(Icons.microwave);
-    case 'Oven':
-      return const Icon(Icons.heat_pump);
-    case 'Light':
-      return const Icon(Icons.lightbulb);
-    case 'Fan':
-      return RotatingFanIcon(state: state, speed: speed);
-    default:
-      return const Icon(Icons.home);
   }
 }

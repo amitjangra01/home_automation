@@ -5,7 +5,7 @@ import '../app/models/device.dart';
 import '../app/models/room_model.dart';
 import '../app/widgets/detail_page_tile.dart';
 
-const iconSize = 50.0;
+const iconSize = 20.0;
 
 // const activeLightIcon = Icon(Icons.light_mode_outlined, size: iconSize);
 // const inActiveLightIcon = Icon(Icons.light, size: iconSize);
@@ -47,117 +47,145 @@ const inActiveMicrowaveIcon = Icon(Icons.cancel_outlined, size: iconSize);
 const activeOvenIcon = Icon(Icons.heat_pump_rounded, size: iconSize);
 const inActiveOvenIcon = Icon(Icons.cancel_outlined, size: iconSize);
 
-List<RoomModel> homePageTiles = [
-  RoomModel(name: "Bedroom", icon: Icons.bed, index: 0, devices: [
-    Device(
-      name: 'Light',
-      activeIcon: activeLightIcon,
-      inActiveIcon: inActiveLightIcon,
-      state: false,
-    ),
-    Device(
-      name: 'Fan',
-      activeIcon: const RotatingFanIcon(speed: 3, state: true),
-      inActiveIcon: inActiveFanIcon,
-      state: true,
-      intensity: 3,
-    ),
-    Device(
-      name: 'AC',
-      activeIcon: activeAcIcon,
-      inActiveIcon: inActiveAcIcon,
-      state: false,
-    ),
-    Device(
-      name: 'TV',
-      activeIcon: activeTvIcon,
-      inActiveIcon: inActiveTvIcon,
-      state: false,
-    ),
-  ]),
-  RoomModel(name: "Living Room", icon: Icons.living, index: 1, devices: [
-    Device(
-      name: 'TV',
-      activeIcon: activeTvIcon,
-      inActiveIcon: inActiveTvIcon,
-      state: false,
-    ),
-    Device(
-      name: 'AC',
-      activeIcon: activeAcIcon,
-      inActiveIcon: inActiveAcIcon,
-      state: true,
-    ),
-    Device(
-      name: 'Fan',
-      activeIcon: const RotatingFanIcon(speed: 1, state: true),
-      inActiveIcon: inActiveFanIcon,
-      state: true,
-      intensity: 1,
-    ),
-    Device(
-      name: 'Light',
-      activeIcon: activeLightIcon,
-      inActiveIcon: inActiveLightIcon,
-      state: false,
-    ),
-    Device(
-      name: 'Music',
-      activeIcon: activeMusicIcon,
-      inActiveIcon: inActiveMusicIcon,
-      state: false,
-    ),
-    Device(
-      name: 'Curtains',
-      activeIcon: activeCurtainsIcon,
-      inActiveIcon: inActiveCurtainsIcon,
-      state: false,
-    ),
-  ]),
-  RoomModel(name: "Guest Room", icon: Icons.person, index: 2, devices: [
-    Device(
-      name: 'Light',
-      activeIcon: activeLightIcon,
-      inActiveIcon: inActiveLightIcon,
-      state: false,
-    ),
-    Device(
-      name: 'TV',
-      activeIcon: activeTvIcon,
-      inActiveIcon: inActiveTvIcon,
-      state: false,
-    ),
-    Device(
-      name: 'AC',
-      activeIcon: activeAcIcon,
-      inActiveIcon: inActiveAcIcon,
-      state: true,
-    ),
-  ]),
-  RoomModel(name: "Kitchen", icon: Icons.kitchen, index: 3, devices: [
-    Device(
-      name: 'Refrigerator',
-      activeIcon: activeRefrigeratorIcon,
-      inActiveIcon: inActiveRefrigeratorIcon,
-      state: false,
-    ),
-    Device(
-      name: 'Microwave',
-      activeIcon: activeMicrowaveIcon,
-      inActiveIcon: inActiveMicrowaveIcon,
-      state: false,
-    ),
-    Device(
-      name: 'Oven',
-      activeIcon: activeOvenIcon,
-      inActiveIcon: inActiveOvenIcon,
-      state: false,
-    ),
-    Device(
-      name: 'Light',
-      activeIcon: activeLightIcon,
-      inActiveIcon: inActiveLightIcon,
-      state: false,
-    ),
-  ]),
+List<RoomModel> roomsList = [
+  bedroom,
+  livingRoom,
+  guestRoom,
+  kitchen,
 ];
+
+final bedroom = RoomModel(name: "Bedroom", icon: Icons.bed, id: 0, devices: [
+  Device(
+    name: 'Light',
+    activeIcon: activeLightIcon,
+    inActiveIcon: inActiveLightIcon,
+    state: false,
+    id: '101',
+  ),
+  Device(
+    name: 'Fan',
+    activeIcon: const RotatingFanIcon(speed: 3, state: true),
+    inActiveIcon: inActiveFanIcon,
+    state: true,
+    intensity: 3,
+    id: '102',
+  ),
+  Device(
+    name: 'AC',
+    activeIcon: activeAcIcon,
+    inActiveIcon: inActiveAcIcon,
+    state: false,
+    id: '103',
+  ),
+  Device(
+    name: 'TV',
+    activeIcon: activeTvIcon,
+    inActiveIcon: inActiveTvIcon,
+    state: false,
+    id: '104',
+  ),
+]);
+
+final livingRoom =
+    RoomModel(name: "Living Room", icon: Icons.living, id: 1, devices: [
+  Device(
+    name: 'TV',
+    activeIcon: activeTvIcon,
+    inActiveIcon: inActiveTvIcon,
+    state: false,
+    id: '201',
+  ),
+  Device(
+    name: 'AC',
+    activeIcon: activeAcIcon,
+    inActiveIcon: inActiveAcIcon,
+    state: true,
+    id: '202',
+  ),
+  Device(
+    name: 'Fan',
+    activeIcon: const RotatingFanIcon(speed: 1, state: true),
+    inActiveIcon: inActiveFanIcon,
+    state: true,
+    intensity: 1,
+    id: '203',
+  ),
+  Device(
+    name: 'Light',
+    activeIcon: activeLightIcon,
+    inActiveIcon: inActiveLightIcon,
+    state: false,
+    id: '204',
+  ),
+  Device(
+    name: 'Music',
+    activeIcon: activeMusicIcon,
+    inActiveIcon: inActiveMusicIcon,
+    state: false,
+    id: '205',
+  ),
+  Device(
+    name: 'Curtains',
+    activeIcon: activeCurtainsIcon,
+    inActiveIcon: inActiveCurtainsIcon,
+    state: false,
+    id: '206',
+  ),
+]);
+
+final guestRoom =
+    RoomModel(name: "Guest Room", icon: Icons.person, id: 2, devices: [
+  Device(
+    name: 'Light',
+    activeIcon: activeLightIcon,
+    inActiveIcon: inActiveLightIcon,
+    state: false,
+    id: '301',
+  ),
+  Device(
+    name: 'TV',
+    activeIcon: activeTvIcon,
+    inActiveIcon: inActiveTvIcon,
+    state: false,
+    id: '302',
+  ),
+  Device(
+    name: 'AC',
+    activeIcon: activeAcIcon,
+    inActiveIcon: inActiveAcIcon,
+    state: true,
+    id: '303',
+  ),
+]);
+
+final kitchen =
+    RoomModel(name: "Kitchen", icon: Icons.kitchen, id: 3, devices: [
+  Device(
+    name: 'Refrigerator',
+    activeIcon: activeRefrigeratorIcon,
+    inActiveIcon: inActiveRefrigeratorIcon,
+    state: false,
+    id: '401',
+  ),
+  Device(
+    name: 'Microwave',
+    activeIcon: activeMicrowaveIcon,
+    inActiveIcon: inActiveMicrowaveIcon,
+    state: false,
+    id: '402',
+  ),
+  Device(
+    name: 'Oven',
+    activeIcon: activeOvenIcon,
+    inActiveIcon: inActiveOvenIcon,
+    state: false,
+    id: '403',
+  ),
+  Device(
+    name: 'Light',
+    activeIcon: activeLightIcon,
+    inActiveIcon: inActiveLightIcon,
+    state: false,
+    id: '404',
+  ),
+]);

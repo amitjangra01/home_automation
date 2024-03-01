@@ -44,6 +44,7 @@ dependencies:
   flutter_riverpod: ^2.4.10
   lottie: ^3.1.0
   adaptive_theme: ^3.6.0
+  utils_widget:
 
 dev_dependencies:
   flutter_test:

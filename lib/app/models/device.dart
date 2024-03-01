@@ -7,13 +7,15 @@ class Device {
   final Widget activeIcon;
   final Widget inActiveIcon;
   bool state;
-  final int intensity;
+  int intensity;
+  final String id;
   Device({
     required this.name,
     required this.activeIcon,
     required this.inActiveIcon,
     this.state = false,
     this.intensity = 0,
+    required this.id,
   });
 
   Widget get fanActiveIcon {
