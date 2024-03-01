@@ -30,7 +30,11 @@ class DetailPageTile extends HookConsumerWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           const SizedBox(height: 30),
-          icon,
+          SizedBox(
+            height: 75,
+            width: 75,
+            child: icon,
+          ),
           const Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../detail/view.dart';
@@ -23,6 +24,8 @@ class HomePageTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mode = AdaptiveTheme.of(context).mode;
+    const light = AdaptiveThemeMode.light;
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -68,7 +71,7 @@ class HomePageTile extends StatelessWidget {
                             )
                           : null,
           border: Border.all(
-            // color: Colors.teal,
+            color: mode == light ? Colors.teal : Colors.grey,
             width: 2,
           ),
         ),
@@ -76,13 +79,13 @@ class HomePageTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            Icon(icon, size: 30, color: Colors.teal),
+            Icon(icon,
+                size: 30, color: mode == light ? Colors.teal : Colors.grey),
             const SizedBox(height: 50),
             Text(
               title,
               style: const TextStyle(
                 fontSize: 22,
-                // color: Colors.black,
               ),
             ),
             const SizedBox(height: 2),

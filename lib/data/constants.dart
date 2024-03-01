@@ -18,13 +18,16 @@ LottieBuilder inActiveLightIcon =
 Image inActiveFanIcon = Image.asset('assets/fan-2.png', scale: 0.8);
 const activeFanIcon = RotatingFanIcon();
 
-const activeAcIcon = Icon(Icons.ac_unit, size: iconSize);
-const inActiveAcIcon = Icon(Icons.heat_pump_outlined, size: iconSize);
+// const activeAcIcon = Icon(Icons.ac_unit, size: iconSize);
+const inActiveAcIcon = Icon(Icons.power_settings_new, size: iconSize);
+LottieBuilder activeAcIcon = Lottie.asset('assets/lottie/ac-on.json');
 
 // const activeTvIcon = Icon(Icons.tv, size: iconSize);
+const inActiveTvIcon = Icon(Icons.tv, size: iconSize);
 LottieBuilder activeTvIcon =
-    Lottie.asset('assets/lottie/tv-on.json', height: 75);
-const inActiveTvIcon = Icon(Icons.tv_off, size: iconSize);
+    Lottie.asset('assets/lottie/tv-on.json', height: 95, width: 95);
+// LottieBuilder inActiveTvIcon =
+//     Lottie.asset('assets/lottie/tv-off.json', height: 75);
 
 // const activeMusicIcon = Icon(Icons.music_note_outlined, size: iconSize);
 LottieBuilder activeMusicIcon =
