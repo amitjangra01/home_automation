@@ -23,7 +23,6 @@ class RoomDevicesStateNotifier extends StateNotifier<List<RoomModel>> {
       }
       return e;
     }).toList();
-    logger.d(list.map((e) => e.devices.map((e) => e.state).toList()).toList());
     state = list;
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:home_automation/app/detail/provider.dart';
 
 import '../detail/view.dart';
-import '../models/device.dart';
 import '../models/room_model.dart';
 
 class HomePageTile extends ConsumerWidget {
@@ -37,7 +36,7 @@ class HomePageTile extends ConsumerWidget {
         );
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           borderRadius: room.id == 0
               ? BorderRadius.only(
@@ -75,7 +74,7 @@ class HomePageTile extends ConsumerWidget {
             const SizedBox(height: 20),
             Icon(room.icon,
                 size: 30, color: mode == light ? Colors.teal : Colors.grey),
-            const SizedBox(height: 50),
+            const SizedBox(height: 46),
             Text(
               room.name,
               style: const TextStyle(
@@ -85,98 +84,74 @@ class HomePageTile extends ConsumerWidget {
             const SizedBox(height: 2),
             Row(
               children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(
-                      color: mode == light ? Colors.green : Colors.grey,
+                if (onDevices.isNotEmpty) ...[
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                    decoration: BoxDecoration(
+                      // color: Colors.white,
+                      borderRadius: BorderRadius.circular(4),
+                      border: const Border(
+                        left: BorderSide(
+                          color: Colors.green,
+                          width: 2,
+                        ),
+                        right: BorderSide(
+                          color: Colors.green,
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ...onDevices
+                            .map((e) => SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: e.activeIcon,
+                                ))
+                            .toList(),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ...room.devices
-                          .where((element) => element.state)
-                          .toList()
-                          .map((e) => Container(
-                                height: 20,
-                                width: 20,
-                                child: e.activeIcon,
-                              ))
-                          .toList(),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(
-                      color: Colors.red,
+                  const SizedBox(width: 4),
+                ],
+                if (offDevices.isNotEmpty)
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      border: const Border(
+                        left: BorderSide(
+                          color: Colors.grey,
+                          width: 2,
+                        ),
+                        right: BorderSide(
+                          color: Colors.grey,
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ...offDevices
+                            .map((e) => SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: e.smallInactiveIcon,
+                                ))
+                            .toList(),
+                      ],
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ...room.devices
-                          .where((element) => !element.state)
-                          .toList()
-                          .map((e) => Container(
-                                height: 20,
-                                width: 20,
-                                child: e.inActiveIcon,
-                              ))
-                          .toList(),
-                    ],
-                  ),
-                ),
               ],
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class OnOffSwitches extends StatelessWidget {
-  final RoomModel room;
-  final List<Device> onDevices;
-  final List<Device> offDevices;
-  const OnOffSwitches(
-      {super.key,
-      required this.room,
-      required this.onDevices,
-      required this.offDevices});
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(children: [
-        Row(
-          children: [
-            GridView.count(
-              crossAxisCount: 2,
-              children: room.devices
-                  .where((element) => element.state)
-                  .toList()
-                  .map((e) => SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: e.activeIcon,
-                      ))
-                  .toList(),
-            ),
-            Container(
-              decoration: BoxDecoration(border: Border.all()),
-            )
-          ],
-        )
-      ]),
     );
   }
 }

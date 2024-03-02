@@ -1,8 +1,12 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:home_automation/app/detail/provider.dart';
+import 'package:lottie/lottie.dart';
+import 'package:utils_widget/utils_widget.dart';
 
+import '../../data/constants.dart';
 import '../home/provider.dart';
 import '../models/device.dart';
 import '../models/room_model.dart';
@@ -42,22 +46,28 @@ class _DetailsViewState extends ConsumerState<DetailsView> {
           shrinkWrap: true,
           children: state
               .map((device) => DetailPageTile(
-                    title: device.name,
-                    icon:
-                        device.state ? device.activeIcon : device.inActiveIcon,
-                    state: device.state,
-                    onChanged: (value) {
-                      ref
-                          .read(
-                              roomDevicesStateNotifierProvider(widget.model.id)
-                                  .notifier)
-                          .toggleDeviceState(device);
+                  device: device,
+                  roomId: widget.model.id,
+                  onChanged: (value) {
+                    ref
+                        .read(roomDevicesStateNotifierProvider(widget.model.id)
+                            .notifier)
+                        .toggleDeviceState(device);
 
-                      ref
-                          .read(roomsStateNotifierProvider.notifier)
-                          .update(state, widget.model.id);
-                    },
-                  ))
+                    ref
+                        .read(roomsStateNotifierProvider.notifier)
+                        .update(state, widget.model.id);
+                  },
+                  onSpeedChange: (value) {
+                    ref
+                        .read(roomDevicesStateNotifierProvider(widget.model.id)
+                            .notifier)
+                        .updateSpeed(device, value);
+
+                    ref
+                        .read(roomsStateNotifierProvider.notifier)
+                        .update(state, widget.model.id);
+                  }))
               .toList(),
         ),
       ),

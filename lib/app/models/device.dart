@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/detail_page_tile.dart';
-
 class Device {
   final String name;
   final Widget activeIcon;
@@ -18,10 +16,7 @@ class Device {
     required this.id,
   });
 
-  Widget get fanActiveIcon {
-    if (name == 'Fan') {
-      return RotatingFanIcon(state: state, speed: intensity);
-    }
-    return state ? activeIcon : inActiveIcon;
+  Widget get smallInactiveIcon {
+    return SizedBox(height: 20, width: 20, child: inActiveIcon);
   }
 }

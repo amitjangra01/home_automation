@@ -1,53 +1,85 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:home_automation/app/detail/provider.dart';
+import 'package:home_automation/app/utils/detail_page_active_icon.dart';
+import 'package:home_automation/data/constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:utils_widget/utils_widget.dart';
+
+import '../models/device.dart';
+import '../utils/detail_page_inactive_icon.dart';
 
 class DetailPageTile extends HookConsumerWidget {
-  final String title;
-  final Widget icon;
-  final bool state;
+  final Device device;
+  final int roomId;
   final void Function(bool)? onChanged;
+  final Function(int)? onSpeedChange;
   const DetailPageTile({
     super.key,
-    this.title = '',
-    required this.icon,
-    this.state = false,
+    required this.device,
+    required this.roomId,
     this.onChanged,
+    this.onSpeedChange,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final roomDevices = ref.watch(roomDevicesStateNotifierProvider(roomId));
     return Container(
       decoration: BoxDecoration(
-        // color: Colors.yellow.shade100,
         borderRadius: BorderRadius.circular(25),
         border: Border.all(
-          color: state ? Colors.pink : Colors.grey,
+          color: device.state ? Colors.pink : Colors.grey,
           width: 2,
         ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const SizedBox(height: 30),
+          if (device.name == DeviceName.fan.name)
+            Align(
+              alignment: Alignment.topRight,
+              child: PopupMenuButton(
+                onSelected: onSpeedChange,
+                itemBuilder: (context) {
+                  return const [
+                    PopupMenuItem(
+                      value: 1,
+                      child: Text('Low'),
+                    ),
+                    PopupMenuItem(
+                      value: 2,
+                      child: Text('Mid'),
+                    ),
+                    PopupMenuItem(
+                      value: 3,
+                      child: Text('High'),
+                    ),
+                  ];
+                },
+              ),
+            ),
+          if (device.name != DeviceName.fan.name) const SizedBox(height: 40),
           SizedBox(
-            height: 75,
-            width: 75,
-            child: icon,
+            height: 55,
+            width: 55,
+            child: Center(
+                child: device.state
+                    ? getDetailPageActiveIcon(device)
+                    : getDetailPageInactiveIcon(device, context)),
           ),
           const Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                title,
+                device.name.toTitleCase(),
                 textScaler: const TextScaler.linear(1.2),
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Switch(
-                value: state,
+                value: device.state,
                 activeColor: Colors.pink,
                 onChanged: onChanged,
               )
@@ -55,49 +87,6 @@ class DetailPageTile extends HookConsumerWidget {
           ),
           const SizedBox(height: 10),
         ],
-      ),
-    );
-  }
-}
-
-class RotatingFanIcon extends StatefulWidget {
-  final int speed;
-  final bool state;
-  const RotatingFanIcon({super.key, this.speed = 0, this.state = false});
-
-  @override
-  State<RotatingFanIcon> createState() => _RotatingFanIconState();
-}
-
-class _RotatingFanIconState extends State<RotatingFanIcon>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    _controller = AnimationController(
-      duration: widget.speed != 0 && widget.state
-          ? Duration(milliseconds: 1000 ~/ widget.speed)
-          : const Duration(days: 365),
-      vsync: this,
-    );
-    _controller.repeat();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return RotationTransition(
-      turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
-      child: Image.asset(
-        'assets/fan-2.png',
-        scale: 0.8,
       ),
     );
   }
